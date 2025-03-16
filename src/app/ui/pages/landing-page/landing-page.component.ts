@@ -1,17 +1,23 @@
 import { Component } from '@angular/core';
-import { UIPageLayoutComponent } from "../../00-fundations/layouts/page-layout/page-layout.component";
-import { UiPreviewInvitationFormComponent } from "../../03-organisms/forms/ui-preview-invitation-form/ui-preview-invitation-form.component";
+import { UIPageLayoutComponent } from '../../layouts/page-layout/page-layout.component';
+import { UIGananciaFijaForm } from '../../organisms/forms/ganancia-fija/ganancia-fija.component';
+import { FormService } from '../../utils/form.service';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [UIPageLayoutComponent, UiPreviewInvitationFormComponent],
+  imports: [UIPageLayoutComponent, UIGananciaFijaForm],
   template: `
     <ui-page-layout
-      pageTitle="Visualizá tu invitación de forma gratuita"
+      pageTitle="Ingrese su ganancia Fija"
     >
-      <ui-preview-invitation-form />
+      <ui-ganancia-fija-form
+      (formularioEnviado)=""
+      />
     </ui-page-layout>
   `,
 })
-export class LandingPageComponent {}
+export class LandingPageComponent {
+  constructor(private readonly formService: FormService) {}
+
+}

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UiBirthdayPageComponent } from './ui-birthday-page.component';
+import { CargaProductosComponent } from './carga-productos.component';
 
-describe('UiBirthdayPageComponent', () => {
-  let component: UiBirthdayPageComponent;
-  let fixture: ComponentFixture<UiBirthdayPageComponent>;
+describe('CargaProductosComponent', () => {
+  let component: CargaProductosComponent;
+  let fixture: ComponentFixture<CargaProductosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UiBirthdayPageComponent]
+      imports: [CargaProductosComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UiBirthdayPageComponent);
+    fixture = TestBed.createComponent(CargaProductosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

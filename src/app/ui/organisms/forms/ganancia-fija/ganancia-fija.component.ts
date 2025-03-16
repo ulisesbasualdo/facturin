@@ -1,20 +1,20 @@
-import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, EventEmitter, output } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
   FormBuilder,
   FormControl,
 } from '@angular/forms';
-import { UiInputComponent } from '../../../01-atoms/ui-input/ui-input.component';
-import { UiLabelComponent } from '../../../01-atoms/ui-label/ui-label.component';
 import { FormService } from '../../../utils/form.service';
-import { UiSubmitBtnComponent } from '../../../01-atoms/ui-submit-btn/ui-submit-btn.component';
-import { PREVIEW_FORM_INPUTS } from './inputs';
-import { IInput } from '../../../interfaces/i-input';
+import { GANANCIA_FIJA_INPUTS } from './ganancia-fija-inputs';
 import { IPreview } from '../../../interfaces/i-preview';
+import { UiInputComponent } from '../../../atoms/input/ui-input.component';
+import { UiLabelComponent } from '../../../atoms/label/ui-label.component';
+import { UiSubmitBtnComponent } from '../../../atoms/submit-btn/ui-submit-btn.component';
+import { IInputGananciaFija } from '../../../interfaces/i-input';
 
 @Component({
-  selector: 'ui-preview-invitation-form',
+  selector: 'ui-ganancia-fija-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -23,7 +23,7 @@ import { IPreview } from '../../../interfaces/i-preview';
     UiSubmitBtnComponent
   ],
   template: `
-    <form [formGroup]="previewInvitationForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="gananciaFijaForm" (ngSubmit)="onSubmit()">
       @for (input of inputs; track input) {
         <div class="input">
           <ui-label [labelTitle]="input.label!"></ui-label>
@@ -45,9 +45,11 @@ import { IPreview } from '../../../interfaces/i-preview';
   `,
   styles: ``,
 })
-export class UiPreviewInvitationFormComponent implements AfterContentInit {
-  protected inputs: IInput[] = PREVIEW_FORM_INPUTS;
-  previewInvitationForm!: FormGroup;
+export class UIGananciaFijaForm implements AfterContentInit {
+  formularioEnviado = output<boolean>();
+
+  protected inputs: IInputGananciaFija[] = GANANCIA_FIJA_INPUTS;
+  gananciaFijaForm!: FormGroup;
 
   constructor(
     private readonly formService: FormService,
@@ -56,9 +58,9 @@ export class UiPreviewInvitationFormComponent implements AfterContentInit {
   ) {}
 
   ngAfterContentInit(): void {
-    this.previewInvitationForm = this.fb.group({});
+    this.gananciaFijaForm = this.fb.group({});
     this.inputs.forEach((input) => {
-      this.previewInvitationForm.addControl(
+      this.gananciaFijaForm.addControl(
         input.formControlName,
         new FormControl(''),
         { emitEvent: false }
@@ -68,14 +70,12 @@ export class UiPreviewInvitationFormComponent implements AfterContentInit {
   }
 
   onSubmit() {
-    if (this.previewInvitationForm.valid) {
-      const preview: IPreview = this.previewInvitationForm.value;
-      console.log(preview);
-      this.formService.createPreview(preview);
+    if (this.gananciaFijaForm.valid) {
+      this.formularioEnviado.emit(true);
     }
   }
 
   getFormControl(name: string): FormControl {
-    return this.previewInvitationForm.get(name) as FormControl;
+    return this.gananciaFijaForm.get(name) as FormControl;
   }
 }
